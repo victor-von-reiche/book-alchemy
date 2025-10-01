@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Book Collection</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Page Title -->
+  <header class="header">
+    <h1>My Book Collection</h1>
+  </header>
+
+  <!-- Flash Messages -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-messages">
+        {% for category, msg in messages %}
+          <p class="{{ category }}">{{ msg }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <!-- Book List -->
+  {% if books %}
+    <div class="book-list">
+      {% for book in books %}
+        <div class="book-card">
+          <img src="https://covers.openlibrary.org/b/isbn/{{ book.isbn }}-M.jpg?default=false"
+               alt="Cover for {{ book.title }}"
+               onerror="this.src='/static/no_cover.png';">
+
+          <h3 class="book-title">{{ book.title }}</h3>
+          <p class="book-author">{{ book.author.name }}</p>
+
+          <form method="post" action="{{ url_for('delete_book', book_id=book.id) }}">
+            <button type="submit" class="delete-btn">Delete</button>
+          </form>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="no-books">No books found.</p>
+  {% endif %}
+
+  <!-- Sort & Search -->
+  <div class="sort-search">
+    <form method="get" action="/Masterschool/Projects/Book_Alchemy/book-alchemy/static" class="sort-form">
+      <button type="submit" name="sort" value="title">Sort by Title</button>
+      <button type="submit" name="sort" value="author">Sort by Author</button>
+    </form>
+
+    <form method="get" action="/Masterschool/Projects/Book_Alchemy/book-alchemy/static" class="search-form">
+      <input type="text" name="search" placeholder="Search by title...">
+      <button type="submit">Search</button>
+    </form>
+  </div>
+
+</body>
+</html>
