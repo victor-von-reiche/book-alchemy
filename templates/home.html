@@ -49,12 +49,12 @@
 
   <!-- Sort & Search -->
   <div class="sort-search">
-    <form method="get" action="/Masterschool/Projects/Book_Alchemy/book-alchemy/static" class="sort-form">
+    <form method="get" action="{{ url_for('main_page') }}" class="sort-form">
       <button type="submit" name="sort" value="title">Sort by Title</button>
       <button type="submit" name="sort" value="author">Sort by Author</button>
     </form>
 
-    <form method="get" action="/Masterschool/Projects/Book_Alchemy/book-alchemy/static" class="search-form">
+    <form method="get" action="{{ url_for('main_page') }}" class="search-form">
       <input type="text" name="search" placeholder="Search by title...">
       <button type="submit">Search</button>
     </form>
